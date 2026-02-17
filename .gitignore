@@ -42,6 +42,6 @@ next-env.d.ts
 
 yarn.lock
 package-lock.json
-/app/generated/prisma
+/generated/prisma
 .env
-src/app/generated
+src/generated
