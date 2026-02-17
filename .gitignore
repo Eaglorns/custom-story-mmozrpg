@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+yarn.lock
+package-lock.json
+/app/generated/prisma
+.env
+src/app/generated
