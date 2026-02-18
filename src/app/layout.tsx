@@ -5,6 +5,7 @@ import "./globals.css";
 import { auth, signOut } from "@/auth";
 import AuthLinks from "./auth-links";
 import { Suspense } from "react";
+import { UserStoreProvider } from "@/providers/user-store-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,7 +68,7 @@ export default function RootLayout({
               </Suspense>
             </div>
           </header>
-          {children}
+          <UserStoreProvider>{children}</UserStoreProvider>
         </Providers>
       </body>
     </html>

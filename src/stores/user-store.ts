@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { createStore } from "zustand/vanilla";
 
 export type UserState = {
   name: string,
@@ -20,7 +20,7 @@ export const defaultInitState: UserState = {
 export const createUserStore = (
   initState: UserState = defaultInitState,
 ) => {
-  return create<UserStore>()((set) => ({
+  return createStore<UserStore>()((set) => ({
     ...initState,
     setName: (name) => set({ name }),
     setEmail: (email) => set({ email }),

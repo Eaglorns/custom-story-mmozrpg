@@ -21,6 +21,8 @@ export default function Providers({
   );
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
   );
 }

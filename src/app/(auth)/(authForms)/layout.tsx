@@ -1,6 +1,5 @@
 import React from "react";
 import AuthCheck from "./auth-check";
-import { UserStoreProvider } from "@/providers/user-store-provider";
 
 type Props = { children: React.ReactNode };
 
@@ -13,9 +12,7 @@ export default function layout({ children }: Props) {
         </main>
       }
     >
-      <AuthCheck>
-        <UserStoreProvider>{children}</UserStoreProvider>
-      </AuthCheck>
+      <AuthCheck>{children}</AuthCheck>
     </React.Suspense>
   );
 }
