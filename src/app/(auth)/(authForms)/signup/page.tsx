@@ -1,7 +1,20 @@
 import Link from "next/link";
 import { CreateAccount } from "./actionts";
 
-const page = async () => {
+type PageProps = {
+  searchParams: Promise<{ error?: string }>;
+};
+
+const errorMessages: Record<string, string> = {
+  missing_fields: "Заполните все поля.",
+  email_taken: "Пользователь с таким email уже существует.",
+  auth_failed: "Не удалось завершить регистрацию. Попробуйте снова.",
+};
+
+const page = async ({ searchParams }: PageProps) => {
+  const { error } = await searchParams;
+  const errorMessage = error ? errorMessages[error] : null;
+
   return (
     <main className="min-h-svh w-full bg-zinc-950 text-zinc-100">
       <div className="mx-auto flex min-h-svh w-full max-w-md items-center px-4 py-8 sm:px-6">
@@ -25,6 +38,12 @@ const page = async () => {
 
           <form action={CreateAccount}>
             <div className="flex w-full flex-col gap-5">
+              {errorMessage ? (
+                <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+                  {errorMessage}
+                </p>
+              ) : null}
+
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="name"

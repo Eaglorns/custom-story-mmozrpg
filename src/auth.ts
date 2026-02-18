@@ -1,10 +1,18 @@
-import NextAuth from "next-auth";
+import NextAuth, {CredentialsSignin} from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./prisma";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { signInSchema } from "./lib/zod";
 import { ZodError } from "zod";
+
+class UserNotFoundError extends CredentialsSignin {
+  code = "user_not_found";
+}
+
+class WrongPasswordError extends CredentialsSignin {
+  code = "wrong_password";
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -27,16 +35,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
 
           if (!user?.password) {
-            return null;
+            throw new UserNotFoundError();
           }
 
           const isValidPassword = await compare(password, user.password);
           if (!isValidPassword) {
-            return null;
+            throw new WrongPasswordError();
           }
 
           return user;
         } catch (error) {
+          if (error instanceof CredentialsSignin) {
+            throw error;
+          }
+
           if (error instanceof ZodError) {
             return null;
           }
