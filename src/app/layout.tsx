@@ -60,9 +60,9 @@ export default function RootLayout({
           <header className="border-b border-white/10 bg-black/70">
             <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
               <h1 className="text-base font-semibold tracking-tight text-zinc-100 sm:text-lg">
-                Custom Story MMORPG
+                Custom Story MMOZRPG
               </h1>
-              <Suspense fallback={<AuthLinks />}>
+              <Suspense fallback={null}>
                 <HeaderAuthControls />
               </Suspense>
             </div>
