@@ -1,45 +1,50 @@
-import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import prisma from "./prisma"
-import Credentials from "next-auth/providers/credentials"
-import { compare } from "bcryptjs"
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "./prisma";
+import Credentials from "next-auth/providers/credentials";
+import { compare } from "bcryptjs";
+import { signInSchema } from "./lib/zod";
+import { ZodError } from "zod";
 
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    Credentials({
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
 
-export const {handlers, auth, signIn, signOut} = NextAuth({
-    adapter:PrismaAdapter(prisma),
-    providers:[
-        Credentials({
-            credentials:{
-                name: {label:"Name", type:"text"},
-                email:{label:"Email", type:"email"},
-                password:{lablel:"Password", type:"password"}
+      authorize: async (credentials) => {
+        try {
+          const { email, password } =
+            await signInSchema.parseAsync(credentials);
+
+          const user = await prisma.user.findUnique({
+            where: {
+              email,
             },
+          });
 
-            authorize: async(credentials)=>{
-                if(!credentials?.email || !credentials?.password) return null
+          if (!user?.password) {
+            return null;
+          }
 
-                const email = credentials.email as string
-                const password = credentials.password as string
+          const isValidPassword = await compare(password, user.password);
+          if (!isValidPassword) {
+            return null;
+          }
 
+          return user;
+        } catch (error) {
+          if (error instanceof ZodError) {
+            return null;
+          }
+          return null;
+        }
+      },
+    }),
+  ],
 
-                // Check for the user
-                const user = await prisma.user.findUnique({
-                    where:{
-                        email
-                    }
-                })
-
-                // Check if no user exists or not email and password providers
-                if(!user?.password) return null
-
-                const isValid = await compare(password, user.password)
-
-                if(!isValid) return null
-
-                return user
-            }
-        })
-    ],
-
-    session:{strategy:"jwt"}
-})
+  session: { strategy: "jwt" },
+});

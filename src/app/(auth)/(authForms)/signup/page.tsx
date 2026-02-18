@@ -1,26 +1,7 @@
 import Link from "next/link";
 import { CreateAccount } from "./actionts";
 
-type Props = {
-  searchParams?: Promise<{
-    error?: string;
-  }>;
-};
-
-const errorMap: Record<string, string> = {
-  "Missing fields": "Заполните все поля",
-  "User already exists": "Пользователь с таким email уже существует",
-};
-
-const page = async ({ searchParams }: Props) => {
-  const params = await searchParams;
-  const error = params?.error
-    ? decodeURIComponent(params.error.replaceAll('+', " "))
-    : undefined;
-  const errorMessage = error
-    ? (errorMap[error] ?? "Не удалось создать аккаунт")
-    : null;
-
+const page = async () => {
   return (
     <main className="min-h-svh w-full bg-zinc-950 text-zinc-100">
       <div className="mx-auto flex min-h-svh w-full max-w-md items-center px-4 py-8 sm:px-6">
@@ -103,10 +84,6 @@ const page = async ({ searchParams }: Props) => {
               </button>
             </div>
           </form>
-
-          {errorMessage && (
-            <p className="mt-4 text-sm text-red-400">{errorMessage}</p>
-          )}
         </div>
       </div>
     </main>

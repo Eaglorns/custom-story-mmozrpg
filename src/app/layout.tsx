@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Providers from "./providers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,12 +35,12 @@ export default function RootLayout({
               <h1 className="text-base font-semibold tracking-tight text-zinc-100 sm:text-lg">
                 Custom Story MMORPG
               </h1>
-              <button
-                type="button"
+              <Link
+                href="/signin"
                 className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-zinc-100 transition-colors hover:bg-white/10 sm:px-4 sm:py-2"
               >
                 Войти
-              </button>
+              </Link>
             </div>
           </header>
           {children}

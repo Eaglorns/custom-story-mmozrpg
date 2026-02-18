@@ -1,9 +1,7 @@
-import { signIn } from "@/auth";
 import Link from "next/link";
+import { GetAccount } from "./actions";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <main className="min-h-svh w-full bg-zinc-950 text-zinc-100">
       <div className="mx-auto flex min-h-svh w-full max-w-md items-center px-4 py-8 sm:px-6">
@@ -25,18 +23,7 @@ const page = (props: Props) => {
             </div>
           </header>
 
-          <form
-            action={async (formData: FormData) => {
-              "use server";
-
-              await signIn("credentials", {
-                email: formData.get("email"),
-                password: formData.get("password"),
-                redirect: true,
-                redirectTo: process.env.LOGIN_REDIRECT as string,
-              });
-            }}
-          >
+          <form action={GetAccount}>
             <div className="flex w-full flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <label
