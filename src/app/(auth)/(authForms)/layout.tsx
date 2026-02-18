@@ -1,12 +1,21 @@
 import React from "react";
-import AuthCheck from "./AuthCheck";
+import AuthCheck from "./auth-check";
+import { UserStoreProvider } from "@/providers/user-store-provider";
 
 type Props = { children: React.ReactNode };
 
 export default function layout({ children }: Props) {
   return (
-    <React.Suspense fallback={<main className="w-full h-screen flex items-center justify-center">Loading...</main>}>
-      <AuthCheck>{children}</AuthCheck>
+    <React.Suspense
+      fallback={
+        <main className="w-full h-screen flex items-center justify-center">
+          Loading...
+        </main>
+      }
+    >
+      <AuthCheck>
+        <UserStoreProvider>{children}</UserStoreProvider>
+      </AuthCheck>
     </React.Suspense>
   );
 }

@@ -3,7 +3,7 @@ import Providers from "./providers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { auth, signOut } from "@/auth";
-import AuthLinks from "./AuthLinks";
+import AuthLinks from "./auth-links";
 import { Suspense } from "react";
 
 const geistSans = Geist({

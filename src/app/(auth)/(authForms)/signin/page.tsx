@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GetAccount } from "./actions";
+import { useUserStore } from '@/providers/user-store-provider'
 
 type PageProps = {
   searchParams: Promise<{ error?: string }>;
