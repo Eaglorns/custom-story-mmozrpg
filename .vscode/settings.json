@@ -1,5 +1,30 @@
 {
     "cSpell.words": [
         "cuid"
-    ]
+    ],
+    "editor.quickSuggestions": {
+        "strings": "on"
+    },
+    "tailwindCSS.experimental.configFile": "src/app/globals.scss",
+    "tailwindCSS.includeLanguages": {
+        "scss": "css",
+        "typescript": "javascript",
+        "typescriptreact": "javascript",
+        "javascriptreact": "javascript"
+    },
+    "tailwindCSS.classAttributes": [
+        "class",
+        "className",
+        "ngClass"
+    ],
+    "[typescriptreact]": {
+        "editor.quickSuggestions": {
+            "strings": "on"
+        }
+    },
+    "[javascriptreact]": {
+        "editor.quickSuggestions": {
+            "strings": "on"
+        }
+    }
 }

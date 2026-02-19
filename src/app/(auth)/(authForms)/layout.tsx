@@ -7,7 +7,7 @@ export default function layout({ children }: Props) {
   return (
     <React.Suspense
       fallback={
-        <main className="w-full h-screen flex items-center justify-center">
+        <main className="flex h-screen w-full items-center justify-center">
           Loading...
         </main>
       }

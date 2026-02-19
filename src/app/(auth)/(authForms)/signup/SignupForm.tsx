@@ -36,7 +36,7 @@ export default function SignupForm({
             required
             value={name}
             onChange={(event) => setName(event.target.value)}
-            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-zinc-500"
+            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 transition outline-none placeholder:text-zinc-500 focus:border-zinc-500"
           />
         </div>
 
@@ -52,7 +52,7 @@ export default function SignupForm({
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-zinc-500"
+            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 transition outline-none placeholder:text-zinc-500 focus:border-zinc-500"
           />
         </div>
 
@@ -69,7 +69,7 @@ export default function SignupForm({
             type="password"
             placeholder="Создайте пароль"
             required
-            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-zinc-500"
+            className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 transition outline-none placeholder:text-zinc-500 focus:border-zinc-500"
           />
         </div>
 
