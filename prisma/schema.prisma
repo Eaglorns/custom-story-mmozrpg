@@ -13,8 +13,87 @@ datasource db {
   provider = "postgresql"
 }
 
+model Hero {
+  id                Int             @id @default(autoincrement())
+  money             Decimal         @default(0) @db.Decimal()
+  equipment         EquipmentItem[]
+  container_slots   Int             @default(4) @db.SmallInt
+  container_items   ContainerItem[]
+  // Статус
+  par_hp            Decimal         @default(100.0) @db.Decimal(7, 2) // Здоровье
+  par_mp            Decimal         @default(30.0) @db.Decimal(7, 2) // Мана
+  par_stamina       Float           @default(100.0) // Запас сил (длительность активностей)
+  par_focus         Float           @default(100.0) // Концентрация (качество выполнения)
+  par_sat           Float           @default(100.0) // Сытость (штрафы при низком значении)
+  par_morale        Float           @default(100.0) // Мораль (скорость/успех задач)
+  par_injury        Float           @default(0.0) // Травмы (повышают риск провала)
+  // Характеристики
+  stat_str          Int             @default(10) // Сила (добыча, стройка, ближний бой)
+  stat_end          Int             @default(10) // Выносливость (длительные задачи)
+  stat_agi          Int             @default(10) // Ловкость (уклонение, сбор, охота)
+  stat_int          Int             @default(10) // Интеллект (квесты, крафт, планирование)
+  stat_spi          Int             @default(10) // Дух (магия, устойчивость)
+  stat_will         Int             @default(10) // Воля (длинные/сложные действия)
+  stat_cha          Int             @default(10) // Харизма (городские задания, переговоры)
+  stat_luck         Int             @default(0) // Удача (редкие события/дроп)
+  // Боевые навыки (авто-охота)
+  combat_melee      Int             @default(0) // Ближний бой
+  combat_ranged     Int             @default(0) // Дальний бой
+  combat_magic      Int             @default(0) // Боевая магия
+  combat_defense    Int             @default(0) // Защита/выживание
+  combat_tactics    Int             @default(0) // Тактика (снижение риска, эффективность)
+  // Профессии
+  prof_hunter       Int             @default(0) // Охота на монстров, выслеживание целей
+  prof_scout        Int             @default(0) // Разведка локаций, поиск событий и угроз
+  prof_herbalist    Int             @default(0) // Сбор трав и реагентов
+  prof_miner        Int             @default(0) // Добыча руды и камня
+  prof_lumberjack   Int             @default(0) // Заготовка древесины
+  prof_fisher       Int             @default(0) // Рыбный промысел
+  prof_blacksmith   Int             @default(0) // Ковка оружия и инструментов
+  prof_carpenter    Int             @default(0) // Деревянные конструкции и компоненты
+  prof_mason        Int             @default(0) // Каменные конструкции и укрепления
+  prof_builder      Int             @default(0) // Строительство и улучшение зданий
+  prof_tanner       Int             @default(0) // Обработка кожи и защитного снаряжения
+  prof_jeweler      Int             @default(0) // Украшения и точные изделия
+  prof_alchemist    Int             @default(0) // Зелья, смеси, расходники
+  prof_enchanter    Int             @default(0) // Зачарование экипировки
+  prof_runemaster   Int             @default(0) // Руны и рунные модификации
+  prof_artificer    Int             @default(0) // Сложные артефакты и устройства
+  prof_scribe       Int             @default(0) // Документы, схемы, контракты
+  prof_cartographer Int             @default(0) // Карты, маршруты, бонусы к навигации
+  prof_merchant     Int             @default(0) // Торговые операции и сделки
+  prof_cook         Int             @default(0) // Пища и бафы восстановления
+}
+
+model EquipmentItem {
+  id      BigInt            @id @default(autoincrement())
+  user    Hero              @relation(fields: [user_id], references: [id])
+  user_id Int               @unique
+  slot    EquipmentItemSlot
+}
+
+enum EquipmentItemSlot {
+  head
+  body
+  bracers
+  ring1
+  ring2
+  legs
+  boots
+  hands
+  shield
+  backpack
+}
+
+model ContainerItem {
+  id      BigInt @id @default(autoincrement())
+  user    Hero   @relation(fields: [user_id], references: [id])
+  user_id Int    @unique
+}
+
 model User {
   id            String    @id @default(cuid())
+  role          UserRole  @default(user)
   name          String?
   email         String    @unique
   emailVerified DateTime?
@@ -25,6 +104,13 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  admin
+  moderator
+  vip
+  user
 }
 
 model Account {
